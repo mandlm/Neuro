@@ -1,0 +1,19 @@
+#pragma once
+
+#include <vector>
+
+class Neuron
+{
+private:
+	double outputValue;
+	std::vector<double> outputWeights;
+
+public:
+	void setOutputValue(double value);
+	static double transferFunction(double inputValue);
+	static double transferFunctionDerivative(double inputValue);
+	void feedForward(double inputValue);
+	double getWeightedOutputValue(int outputNeuron) const;
+	void createOutputWeights(unsigned int number);
+	double getOutputValue() const;
+};
