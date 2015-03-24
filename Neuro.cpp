@@ -9,9 +9,9 @@ int main()
 	{
 		std::cout << "Neuro running" << std::endl;
 
-		Net myNet({ 2, 3, 1 });
+		Net myNet({ 3, 4, 2 });
 
-		myNet.feedForward({ 1.0, 0.0 });
+		myNet.feedForward({ 1.0, 2.0, 3.0 });
 
 		std::vector<double> result = myNet.getResult();
 

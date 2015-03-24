@@ -9,11 +9,13 @@ private:
 	std::vector<double> outputWeights;
 
 public:
+	Neuron(double value = 1.0);
+
 	void setOutputValue(double value);
 	static double transferFunction(double inputValue);
 	static double transferFunctionDerivative(double inputValue);
 	void feedForward(double inputValue);
-	double getWeightedOutputValue(int outputNeuron) const;
+	double getWeightedOutputValue(unsigned int outputNeuron) const;
 	void createOutputWeights(unsigned int number);
 	double getOutputValue() const;
 };

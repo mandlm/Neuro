@@ -2,6 +2,12 @@
 
 #include "Neuron.h"
 
+Neuron::Neuron(double value)
+	: outputValue(value)
+{
+
+}
+
 void Neuron::setOutputValue(double value)
 {
 	outputValue = value;
@@ -22,9 +28,14 @@ void Neuron::feedForward(double inputValue)
 	outputValue = Neuron::transferFunction(inputValue);
 }
 
-double Neuron::getWeightedOutputValue(int outputNeuron) const
+double Neuron::getWeightedOutputValue(unsigned int outputNeuron) const
 {
-	return outputValue * outputWeights[outputNeuron];
+	if (outputNeuron < outputWeights.size())
+	{
+		return outputValue * outputWeights[outputNeuron];
+	}
+
+	return 0.0;
 }
 
 void Neuron::createOutputWeights(unsigned int number)

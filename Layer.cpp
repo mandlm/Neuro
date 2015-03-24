@@ -10,24 +10,25 @@ Layer::Layer(unsigned int numNeurons)
 
 void Layer::setOutputValues(const std::vector<double> & outputValues)
 {
-	if (size() != outputValues.size())
+	if (size() - 1 != outputValues.size())
 	{
 		throw std::exception("The number of output values has to match the layer size");
 	}
 
-	auto valueIt = outputValues.begin();
-	for (Neuron &neuron : *this)
+	auto neuronIt = begin();
+	for (const double &value : outputValues)
 	{
-		neuron.setOutputValue(*valueIt++);
+		neuronIt->setOutputValue(value);
+		neuronIt++;
 	}
 }
 
 void Layer::feedForward(const Layer &inputLayer)
 {
 	int neuronNumber = 0;
-	for (Neuron &neuron : *this)
+	for (auto neuronIt = begin(); neuronIt != end(); ++neuronIt)
 	{
-		neuron.feedForward(inputLayer.getWeightedSum(neuronNumber));
+		neuronIt->feedForward(inputLayer.getWeightedSum(neuronNumber++));
 	}
 }
 

@@ -17,6 +17,8 @@ Net::Net(std::initializer_list<unsigned int> layerSizes)
 		Layer &currentLayer = *layerIt;
 		const Layer &nextLayer = *(layerIt + 1);
 
+		currentLayer.push_back(Neuron(1.0));
+
 		currentLayer.connectTo(nextLayer);
 	}
 }
@@ -25,7 +27,7 @@ void Net::feedForward(const std::vector<double> &inputValues)
 {
 	Layer &inputLayer = front();
 
-	if (inputLayer.size() != inputValues.size())
+	if (inputLayer.size() - 1 != inputValues.size())
 	{
 		throw std::exception("The number of input values has to match the input layer size");
 	}
