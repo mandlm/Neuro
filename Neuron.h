@@ -7,6 +7,7 @@ class Neuron
 private:
 	double outputValue;
 	std::vector<double> outputWeights;
+	double gradient;
 
 public:
 	Neuron(double value = 1.0);
@@ -18,4 +19,7 @@ public:
 	double getWeightedOutputValue(unsigned int outputNeuron) const;
 	void createRandomOutputWeights(unsigned int numberOfWeights);
 	double getOutputValue() const;
+
+	void calcOutputGradients(double targetValue);
+	//void calcHiddenGradients(const Layer &prevLayer);
 };

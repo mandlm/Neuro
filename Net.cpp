@@ -59,7 +59,7 @@ std::vector<double> Net::getOutput()
 
 void Net::backProp(const std::vector<double> &targetValues)
 {
-	const Layer &outputLayer = back();
+	Layer &outputLayer = back();
 
 	if (targetValues.size() != outputLayer.size())
 	{
@@ -67,12 +67,30 @@ void Net::backProp(const std::vector<double> &targetValues)
 	}
 
 	std::vector<double> resultValues = getOutput();
-
+	unsigned int numResultValues = resultValues.size();
 	double rmsError = 0.0;
-	for (unsigned int i = 0; i < resultValues.size(); ++i)
+
+	for (unsigned int i = 0; i < numResultValues; ++i)
 	{
 		double delta = resultValues[i] - targetValues[i];
 		rmsError += delta * delta;
 	}
-	rmsError = sqrt(rmsError / resultValues.size());
+
+	rmsError = sqrt(rmsError / numResultValues);
+
+	for (unsigned int i = 0; i < numResultValues; ++i)
+	{
+		outputLayer[i].calcOutputGradients(targetValues[i]);
+	}
+
+	for (auto it = end() - 1; it != begin(); --it)
+	{
+		Layer &hiddenLayer = *it;
+		Layer &prevLayer = *(it - 1);
+
+		for (auto neuron : hiddenLayer)
+		{
+			//neuron.calcHiddenGradients(prevLayer);
+		}
+	}
 }

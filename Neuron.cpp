@@ -4,6 +4,7 @@
 
 Neuron::Neuron(double value)
 	: outputValue(value)
+	, gradient(0)
 {
 
 }
@@ -52,3 +53,10 @@ double Neuron::getOutputValue() const
 {
 	return outputValue;
 }
+
+void Neuron::calcOutputGradients(double targetValue)
+{
+	double delta = targetValue - outputValue;
+	gradient = delta * transferFunctionDerivative(outputValue);
+}
+
