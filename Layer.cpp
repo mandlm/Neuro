@@ -1,6 +1,6 @@
 #include "Layer.h"
 
-Layer::Layer(unsigned int numNeurons)
+Layer::Layer(size_t numNeurons)
 {
 	for (unsigned int i = 0; i < numNeurons; ++i)
 	{

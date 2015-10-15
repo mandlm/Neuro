@@ -39,7 +39,7 @@ double Neuron::getWeightedOutputValue(unsigned int outputNeuron) const
 	return 0.0;
 }
 
-void Neuron::createRandomOutputWeights(unsigned int numberOfWeights)
+void Neuron::createRandomOutputWeights(size_t numberOfWeights)
 {
 	outputWeights.clear();
 

@@ -7,7 +7,7 @@
 class Net : public std::vector < Layer >
 {
 public:
-	Net(std::initializer_list<unsigned int> layerSizes);
+	Net(std::initializer_list<size_t> layerSizes);
 
 	void feedForward(const std::vector<double> &inputValues);
 	std::vector<double> getOutput();

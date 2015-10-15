@@ -1,13 +1,13 @@
 #include "Net.h"
 
-Net::Net(std::initializer_list<unsigned int> layerSizes)
+Net::Net(std::initializer_list<size_t> layerSizes)
 {
 	if (layerSizes.size() < 3)
 	{
 		throw std::exception("A net needs at least 3 layers");
 	}
 
-	for (unsigned int numNeurons : layerSizes)
+	for (size_t numNeurons : layerSizes)
 	{
 		push_back(Layer(numNeurons));
 	}
@@ -67,7 +67,7 @@ void Net::backProp(const std::vector<double> &targetValues)
 	}
 
 	std::vector<double> resultValues = getOutput();
-	unsigned int numResultValues = resultValues.size();
+	size_t numResultValues = resultValues.size();
 	double rmsError = 0.0;
 
 	for (unsigned int i = 0; i < numResultValues; ++i)
