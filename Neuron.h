@@ -16,6 +16,6 @@ public:
 	static double transferFunctionDerivative(double inputValue);
 	void feedForward(double inputValue);
 	double getWeightedOutputValue(unsigned int outputNeuron) const;
-	void createOutputWeights(unsigned int number);
+	void createRandomOutputWeights(unsigned int numberOfWeights);
 	double getOutputValue() const;
 };

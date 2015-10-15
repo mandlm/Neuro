@@ -17,7 +17,8 @@ Net::Net(std::initializer_list<unsigned int> layerSizes)
 		Layer &currentLayer = *layerIt;
 		const Layer &nextLayer = *(layerIt + 1);
 
-		currentLayer.push_back(Neuron(1.0));
+		Neuron biasNeuron(1.0);
+		currentLayer.push_back(biasNeuron);
 
 		currentLayer.connectTo(nextLayer);
 	}
@@ -43,7 +44,7 @@ void Net::feedForward(const std::vector<double> &inputValues)
 	}
 }
 
-std::vector<double> Net::getResult()
+std::vector<double> Net::getOutput()
 {
 	std::vector<double> result;
 
@@ -65,7 +66,7 @@ void Net::backProp(const std::vector<double> &targetValues)
 		throw std::exception("The number of target values has to match the output layer size");
 	}
 
-	std::vector<double> resultValues = getResult();
+	std::vector<double> resultValues = getOutput();
 
 	double rmsError = 0.0;
 	for (unsigned int i = 0; i < resultValues.size(); ++i)

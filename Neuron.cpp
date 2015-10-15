@@ -25,7 +25,7 @@ double Neuron::transferFunctionDerivative(double inputValue)
 
 void Neuron::feedForward(double inputValue)
 {
-	outputValue = Neuron::transferFunction(inputValue);
+	outputValue = transferFunction(inputValue);
 }
 
 double Neuron::getWeightedOutputValue(unsigned int outputNeuron) const
@@ -38,11 +38,11 @@ double Neuron::getWeightedOutputValue(unsigned int outputNeuron) const
 	return 0.0;
 }
 
-void Neuron::createOutputWeights(unsigned int number)
+void Neuron::createRandomOutputWeights(unsigned int numberOfWeights)
 {
 	outputWeights.clear();
 
-	for (unsigned int i = 0; i < number; ++i)
+	for (unsigned int i = 0; i < numberOfWeights; ++i)
 	{
 		outputWeights.push_back(std::rand() / (double)RAND_MAX);
 	}

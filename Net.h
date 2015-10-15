@@ -10,6 +10,6 @@ public:
 	Net(std::initializer_list<unsigned int> layerSizes);
 
 	void feedForward(const std::vector<double> &inputValues);
-	std::vector<double> getResult();
+	std::vector<double> getOutput();
 	void backProp(const std::vector<double> &targetValues);
 };

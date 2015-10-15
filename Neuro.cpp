@@ -9,18 +9,23 @@ int main()
 	{
 		std::cout << "Neuro running" << std::endl;
 
-		Net myNet({ 3, 4, 2 });
+		std::vector<double> inputValues = { 1.0, 4.0, 5.0 };
+		std::vector<double> targetValues = { 3.0 };
 
-		myNet.feedForward({ 1.0, 2.0, 3.0 });
+		Net myNet({ inputValues.size(), 4, targetValues.size() });
 
-		std::vector<double> result = myNet.getResult();
+		myNet.feedForward(inputValues);
+
+		std::vector<double> outputValues = myNet.getOutput();
 
 		std::cout << "Result: ";
-		for (double &value : result)
+		for (double &value : outputValues)
 		{
 			std::cout << value << " ";
 		}
 		std::cout << std::endl;
+
+		myNet.backProp(targetValues);
 	}
 	catch (std::exception &ex)
 	{

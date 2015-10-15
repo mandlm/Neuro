@@ -18,8 +18,7 @@ void Layer::setOutputValues(const std::vector<double> & outputValues)
 	auto neuronIt = begin();
 	for (const double &value : outputValues)
 	{
-		neuronIt->setOutputValue(value);
-		neuronIt++;
+		(neuronIt++)->setOutputValue(value);
 	}
 }
 
@@ -48,6 +47,6 @@ void Layer::connectTo(const Layer & nextLayer)
 {
 	for (Neuron &neuron : *this)
 	{
-		neuron.createOutputWeights(nextLayer.size());
+		neuron.createRandomOutputWeights(nextLayer.size());
 	}
 }
