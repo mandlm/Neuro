@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Neuron.h"
+#include "Layer.h"
 
 Neuron::Neuron(double value)
 	: outputValue(value)
@@ -64,7 +65,10 @@ double Neuron::sumDOW(const Layer & nextLayer) const
 {
 	double sum = 0;
 
-	// sum it up
+	for (size_t i = 0; i < nextLayer.size() - 1; ++i)
+	{
+		sum += outputWeights[i] * nextLayer[i].getGradient();
+	}
 
 	return sum;
 }
@@ -73,5 +77,10 @@ void Neuron::calcHiddenGradients(const Layer &nextLayer)
 {
 	double dow = sumDOW(nextLayer);
 	gradient = dow * transferFunctionDerivative(outputValue);
+}
+
+double Neuron::getGradient() const
+{
+	return gradient;
 }
 

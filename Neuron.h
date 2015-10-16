@@ -23,6 +23,8 @@ public:
 	void calcOutputGradients(double targetValue);
 	void calcHiddenGradients(const Layer &nextLayer);
 
+	double getGradient() const;
+
 private:
 	static double transferFunction(double inputValue);
 	static double transferFunctionDerivative(double inputValue);
