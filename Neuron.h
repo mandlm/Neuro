@@ -2,6 +2,8 @@
 
 #include <vector>
 
+class Layer;
+
 class Neuron
 {
 private:
@@ -13,13 +15,17 @@ public:
 	Neuron(double value = 1.0);
 
 	void setOutputValue(double value);
-	static double transferFunction(double inputValue);
-	static double transferFunctionDerivative(double inputValue);
 	void feedForward(double inputValue);
 	double getWeightedOutputValue(unsigned int outputNeuron) const;
 	void createRandomOutputWeights(size_t numberOfWeights);
 	double getOutputValue() const;
 
 	void calcOutputGradients(double targetValue);
-	//void calcHiddenGradients(const Layer &prevLayer);
+	void calcHiddenGradients(const Layer &nextLayer);
+
+private:
+	static double transferFunction(double inputValue);
+	static double transferFunctionDerivative(double inputValue);
+	double sumDOW(const Layer &nextLayer) const;
+
 };

@@ -60,3 +60,18 @@ void Neuron::calcOutputGradients(double targetValue)
 	gradient = delta * transferFunctionDerivative(outputValue);
 }
 
+double Neuron::sumDOW(const Layer & nextLayer) const
+{
+	double sum = 0;
+
+	// sum it up
+
+	return sum;
+}
+
+void Neuron::calcHiddenGradients(const Layer &nextLayer)
+{
+	double dow = sumDOW(nextLayer);
+	gradient = dow * transferFunctionDerivative(outputValue);
+}
+

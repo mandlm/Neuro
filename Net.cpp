@@ -68,6 +68,8 @@ void Net::backProp(const std::vector<double> &targetValues)
 
 	std::vector<double> resultValues = getOutput();
 	size_t numResultValues = resultValues.size();
+
+	// calculate rms error
 	double rmsError = 0.0;
 
 	for (unsigned int i = 0; i < numResultValues; ++i)
@@ -78,19 +80,30 @@ void Net::backProp(const std::vector<double> &targetValues)
 
 	rmsError = sqrt(rmsError / numResultValues);
 
+	// calculate output neuron gradients 
 	for (unsigned int i = 0; i < numResultValues; ++i)
 	{
 		outputLayer[i].calcOutputGradients(targetValues[i]);
 	}
 
+	// calculate hidden neuron gradients
 	for (auto it = end() - 1; it != begin(); --it)
 	{
-		Layer &hiddenLayer = *it;
-		Layer &prevLayer = *(it - 1);
+		Layer &hiddenLayer = *(it - 1);
+		Layer &nextLayer = *it;
 
 		for (auto neuron : hiddenLayer)
 		{
-			//neuron.calcHiddenGradients(prevLayer);
+			neuron.calcHiddenGradients(nextLayer);
 		}
+	}
+
+	// update the input weights
+	for (auto it = end() - 1; it != begin(); --it)
+	{
+		Layer &currentLayer = *it;
+		Layer &prevLayer = *(it - 1);
+
+		currentLayer.updateInputWeights(prevLayer);
 	}
 }

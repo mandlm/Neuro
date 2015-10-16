@@ -50,3 +50,7 @@ void Layer::connectTo(const Layer & nextLayer)
 		neuron.createRandomOutputWeights(nextLayer.size());
 	}
 }
+
+void Layer::updateInputWeights(const Layer & prevLayer)
+{
+}

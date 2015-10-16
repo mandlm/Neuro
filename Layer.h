@@ -13,4 +13,6 @@ public:
 	void feedForward(const Layer &inputLayer);
 	double getWeightedSum(int outputNeuron) const;
 	void connectTo(const Layer & nextLayer);
+
+	void updateInputWeights(const Layer &prevLayer);
 };
