@@ -84,3 +84,13 @@ double Neuron::getGradient() const
 	return gradient;
 }
 
+double Neuron::getOutputWeight(size_t index) const
+{
+	return outputWeights.at(index);
+}
+
+void Neuron::setOutputWeight(size_t index, double value)
+{
+	outputWeights.at(index) = value;
+}
+

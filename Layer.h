@@ -14,5 +14,5 @@ public:
 	double getWeightedSum(int outputNeuron) const;
 	void connectTo(const Layer & nextLayer);
 
-	void updateInputWeights(const Layer &prevLayer);
+	void updateInputWeights(Layer &prevLayer);
 };

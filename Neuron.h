@@ -25,6 +25,9 @@ public:
 
 	double getGradient() const;
 
+	double getOutputWeight(size_t index) const;
+	void setOutputWeight(size_t index, double value);
+
 private:
 	static double transferFunction(double inputValue);
 	static double transferFunctionDerivative(double inputValue);

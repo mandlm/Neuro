@@ -14,18 +14,21 @@ int main()
 
 		Net myNet({ inputValues.size(), 4, targetValues.size() });
 
-		myNet.feedForward(inputValues);
-
-		std::vector<double> outputValues = myNet.getOutput();
-
-		std::cout << "Result: ";
-		for (double &value : outputValues)
+		for (int i = 0; i < 20; ++i)
 		{
-			std::cout << value << " ";
-		}
-		std::cout << std::endl;
+			myNet.feedForward(inputValues);
 
-		myNet.backProp(targetValues);
+			std::vector<double> outputValues = myNet.getOutput();
+
+			std::cout << "Result: ";
+			for (double &value : outputValues)
+			{
+				std::cout << value << " ";
+			}
+			std::cout << std::endl;
+
+			myNet.backProp(targetValues);
+		}
 	}
 	catch (std::exception &ex)
 	{
