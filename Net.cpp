@@ -87,12 +87,12 @@ void Net::backProp(const std::vector<double> &targetValues)
 	}
 
 	// calculate hidden neuron gradients
-	for (auto it = end() - 1; it != begin(); --it)
+	for (auto it = end() - 1; (it - 1) != begin(); --it)
 	{
 		Layer &hiddenLayer = *(it - 1);
 		Layer &nextLayer = *it;
 
-		for (auto neuron : hiddenLayer)
+		for (Neuron &neuron : hiddenLayer)
 		{
 			neuron.calcHiddenGradients(nextLayer);
 		}
