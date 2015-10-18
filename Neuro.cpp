@@ -9,12 +9,12 @@ int main()
 	{
 		std::cout << "Neuro running" << std::endl;
 
-		std::vector<double> inputValues = { 1.0, 4.0, 5.0 };
-		std::vector<double> targetValues = { 3.0 };
+		std::vector<double> inputValues = { 0.1, 0.2, 0.8 };
+		std::vector<double> targetValues = { 0.8 };
 
 		Net myNet({ inputValues.size(), 4, targetValues.size() });
 
-		for (int i = 0; i < 20; ++i)
+		for (int i = 0; i < 200; ++i)
 		{
 			myNet.feedForward(inputValues);
 

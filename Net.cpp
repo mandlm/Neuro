@@ -17,8 +17,7 @@ Net::Net(std::initializer_list<size_t> layerSizes)
 		Layer &currentLayer = *layerIt;
 		const Layer &nextLayer = *(layerIt + 1);
 
-		Neuron biasNeuron(1.0);
-		currentLayer.push_back(biasNeuron);
+		currentLayer.addBiasNeuron();
 
 		currentLayer.connectTo(nextLayer);
 	}

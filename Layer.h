@@ -6,6 +6,9 @@
 
 class Layer : public std::vector < Neuron >
 {
+private:
+	bool hasBiasNeuron = false;
+
 public:
 	Layer(size_t numNeurons);
 
@@ -15,4 +18,8 @@ public:
 	void connectTo(const Layer & nextLayer);
 
 	void updateInputWeights(Layer &prevLayer);
+
+	void addBiasNeuron();
+
+	size_t sizeWithoutBiasNeuron() const;
 };

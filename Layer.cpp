@@ -53,19 +53,37 @@ void Layer::connectTo(const Layer & nextLayer)
 
 void Layer::updateInputWeights(Layer & prevLayer)
 {
-	static const double trainingRate = 0.8;
+	static const double trainingRate = 0.5;
 
-	for (size_t currentLayerIndex = 0; currentLayerIndex < size() - 1; ++currentLayerIndex)
+	for (size_t currentLayerIndex = 0; currentLayerIndex < sizeWithoutBiasNeuron(); ++currentLayerIndex)
 	{
 		Neuron &targetNeuron = at(currentLayerIndex);
 
 		for (size_t prevLayerIndex = 0; prevLayerIndex < prevLayer.size(); ++prevLayerIndex)
 		{
 			Neuron &sourceNeuron = prevLayer.at(prevLayerIndex);
-
+		
 			sourceNeuron.setOutputWeight(currentLayerIndex, 
 				sourceNeuron.getOutputWeight(currentLayerIndex) + 
 				sourceNeuron.getOutputValue() * targetNeuron.getGradient() * trainingRate);
 		}
+	}
+}
+
+void Layer::addBiasNeuron()
+{
+	push_back(Neuron(1.0));
+	hasBiasNeuron = true;
+}
+
+size_t Layer::sizeWithoutBiasNeuron() const
+{
+	if (hasBiasNeuron)
+	{
+		return size() - 1;
+	}
+	else
+	{
+		return size();
 	}
 }
