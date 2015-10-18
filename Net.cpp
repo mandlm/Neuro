@@ -2,9 +2,9 @@
 
 Net::Net(std::initializer_list<size_t> layerSizes)
 {
-	if (layerSizes.size() < 3)
+	if (layerSizes.size() < 2)
 	{
-		throw std::exception("A net needs at least 3 layers");
+		throw std::exception("A net needs at least 2 layers");
 	}
 
 	for (size_t numNeurons : layerSizes)

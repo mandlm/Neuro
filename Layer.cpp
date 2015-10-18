@@ -53,7 +53,7 @@ void Layer::connectTo(const Layer & nextLayer)
 
 void Layer::updateInputWeights(Layer & prevLayer)
 {
-	static const double trainingRate = 0.5;
+	static const double trainingRate = 0.2;
 
 	for (size_t currentLayerIndex = 0; currentLayerIndex < sizeWithoutBiasNeuron(); ++currentLayerIndex)
 	{
