@@ -1,5 +1,6 @@
 #include <iostream>
 #include <exception>
+#include <algorithm>
 
 #include "Net.h"
 
@@ -9,31 +10,27 @@ int main()
 	{
 		std::cout << "Neuro running" << std::endl;
 
-		Net myNet({ 3, 2, 1 });
+		Net myNet({ 2, 3, 1 });
 
-		for (int i = 0; i < 100000; ++i)
+		std::vector<double> inputValues =
 		{
-			std::vector<double> inputValues =
-			{
-				std::rand() / (double)RAND_MAX,
-				std::rand() / (double)RAND_MAX,
-				std::rand() / (double)RAND_MAX
-			};
+			0.1,
+			0.7,
+		};
 
-			std::vector<double> targetValues = { inputValues[2] };
+		std::vector<double> targetValues = { 0.7 };
 
-			myNet.feedForward(inputValues);
+		myNet.feedForward(inputValues);
 
-			std::vector<double> outputValues = myNet.getOutput();
+		std::vector<double> outputValues = myNet.getOutput();
 
-			double error = outputValues[0] - targetValues[0];
+		double error = outputValues[0] - targetValues[0];
 
-			std::cout << "Error: ";
-			std::cout << std::abs(error);
-			std::cout << std::endl;
+		std::cout << "Error: ";
+		std::cout << std::abs(error);
+		std::cout << std::endl;
 
-			myNet.backProp(targetValues);
-		}
+		myNet.backProp(targetValues);
 	}
 	catch (std::exception &ex)
 	{
