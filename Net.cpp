@@ -73,11 +73,10 @@ void Net::backProp(const std::vector<double> &targetValues)
 
 	for (unsigned int i = 0; i < numResultValues; ++i)
 	{
-		double delta = resultValues[i] - targetValues[i];
-		rmsError += delta * delta;
+		rmsError += std::pow(resultValues[i] - targetValues[i], 2);
 	}
 
-	rmsError = sqrt(rmsError / numResultValues);
+	rmsError = std::sqrt(rmsError / numResultValues);
 
 	// calculate output neuron gradients 
 	for (unsigned int i = 0; i < numResultValues; ++i)

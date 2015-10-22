@@ -12,25 +12,32 @@ int main()
 
 		Net myNet({ 2, 3, 1 });
 
-		std::vector<double> inputValues =
+		size_t numIterations = 10000;
+		for (size_t iteration = 0; iteration < numIterations; ++iteration)
 		{
-			0.1,
-			0.7,
-		};
+			std::vector<double> inputValues =
+			{
+				std::rand() / (double)RAND_MAX,
+				std::rand() / (double)RAND_MAX
+			};
 
-		std::vector<double> targetValues = { 0.7 };
+			std::vector<double> targetValues =
+			{
+				*std::max_element(inputValues.begin(), inputValues.end())
+			};
 
-		myNet.feedForward(inputValues);
+			myNet.feedForward(inputValues);
 
-		std::vector<double> outputValues = myNet.getOutput();
+			std::vector<double> outputValues = myNet.getOutput();
 
-		double error = outputValues[0] - targetValues[0];
+			double error = outputValues[0] - targetValues[0];
 
-		std::cout << "Error: ";
-		std::cout << std::abs(error);
-		std::cout << std::endl;
+			std::cout << "Error: ";
+			std::cout << std::abs(error);
+			std::cout << std::endl;
 
-		myNet.backProp(targetValues);
+			myNet.backProp(targetValues);
+		}
 	}
 	catch (std::exception &ex)
 	{

@@ -54,16 +54,16 @@ void Layer::updateInputWeights(Layer & prevLayer)
 {
 	static const double trainingRate = 0.2;
 
-	for (size_t currentLayerIndex = 0; currentLayerIndex < sizeWithoutBiasNeuron(); ++currentLayerIndex)
+	for (size_t targetLayerIndex = 0; targetLayerIndex < sizeWithoutBiasNeuron(); ++targetLayerIndex)
 	{
-		Neuron &targetNeuron = at(currentLayerIndex);
+		const Neuron &targetNeuron = at(targetLayerIndex);
 
-		for (size_t prevLayerIndex = 0; prevLayerIndex < prevLayer.size(); ++prevLayerIndex)
+		for (size_t sourceLayerIndex = 0; sourceLayerIndex < prevLayer.size(); ++sourceLayerIndex)
 		{
-			Neuron &sourceNeuron = prevLayer.at(prevLayerIndex);
+			Neuron &sourceNeuron = prevLayer.at(sourceLayerIndex);
 		
-			sourceNeuron.setOutputWeight(currentLayerIndex, 
-				sourceNeuron.getOutputWeight(currentLayerIndex) + 
+			sourceNeuron.setOutputWeight(targetLayerIndex, 
+				sourceNeuron.getOutputWeight(targetLayerIndex) + 
 				sourceNeuron.getOutputValue() * targetNeuron.getGradient() * trainingRate);
 		}
 	}
