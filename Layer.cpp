@@ -23,11 +23,10 @@ void Layer::setOutputValues(const std::vector<double> & outputValues)
 }
 
 void Layer::feedForward(const Layer &inputLayer)
-{
-	int neuronNumber = 0;
-	for (auto neuronIt = begin(); neuronIt != end(); ++neuronIt)
+{	
+	for (int neuronNumber = 0; neuronNumber < sizeWithoutBiasNeuron(); ++neuronNumber)
 	{
-		neuronIt->feedForward(inputLayer.getWeightedSum(neuronNumber++));
+		at(neuronNumber).feedForward(inputLayer.getWeightedSum(neuronNumber));
 	}
 }
 
@@ -47,7 +46,7 @@ void Layer::connectTo(const Layer & nextLayer)
 {
 	for (Neuron &neuron : *this)
 	{
-		neuron.createRandomOutputWeights(nextLayer.size());
+		neuron.createOutputWeights(nextLayer.sizeWithoutBiasNeuron(), 0.5);
 	}
 }
 

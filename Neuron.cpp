@@ -50,6 +50,26 @@ void Neuron::createRandomOutputWeights(size_t numberOfWeights)
 	}
 }
 
+void Neuron::createOutputWeights(std::list<double> weights)
+{
+	outputWeights.clear();
+
+	for (const double &weight : weights)
+	{
+		outputWeights.push_back(weight);
+	}
+}
+
+void Neuron::createOutputWeights(size_t numberOfWeights, double weight)
+{
+	outputWeights.clear();
+
+	for (unsigned int i = 0; i < numberOfWeights; ++i)
+	{
+		outputWeights.push_back(weight);
+	}
+}
+
 double Neuron::getOutputValue() const
 {
 	return outputValue;

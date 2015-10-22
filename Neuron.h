@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vector>
+#include <list>
 
 class Layer;
 
@@ -17,7 +18,11 @@ public:
 	void setOutputValue(double value);
 	void feedForward(double inputValue);
 	double getWeightedOutputValue(unsigned int outputNeuron) const;
+	
 	void createRandomOutputWeights(size_t numberOfWeights);
+	void createOutputWeights(std::list<double> weights);
+	void createOutputWeights(size_t numberOfWeights, double weight);
+
 	double getOutputValue() const;
 
 	void calcOutputGradients(double targetValue);
