@@ -46,13 +46,13 @@ void Layer::connectTo(const Layer & nextLayer)
 {
 	for (Neuron &neuron : *this)
 	{
-		neuron.createOutputWeights(nextLayer.sizeWithoutBiasNeuron(), 0.5);
+		neuron.createOutputWeights(nextLayer.sizeWithoutBiasNeuron(), 1.0);
 	}
 }
 
 void Layer::updateInputWeights(Layer & prevLayer)
 {
-	static const double trainingRate = 0.2;
+	static const double trainingRate = 0.3;
 
 	for (size_t targetLayerIndex = 0; targetLayerIndex < sizeWithoutBiasNeuron(); ++targetLayerIndex)
 	{

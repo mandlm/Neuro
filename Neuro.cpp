@@ -2,7 +2,11 @@
 #include <exception>
 #include <algorithm>
 
+#include <assert.h>
+
 #include "Net.h"
+
+const double pi = std::acos(-1);
 
 int main()
 {
@@ -12,7 +16,12 @@ int main()
 
 		Net myNet({ 2, 3, 1 });
 
-		size_t numIterations = 10000;
+		size_t batchSize = 5000;
+		size_t batchIndex = 0;
+		double batchMaxError = 0.0;
+		double batchMeanError = 0.0;
+
+		size_t numIterations = 1000000;
 		for (size_t iteration = 0; iteration < numIterations; ++iteration)
 		{
 			std::vector<double> inputValues =
@@ -23,7 +32,7 @@ int main()
 
 			std::vector<double> targetValues =
 			{
-				*std::max_element(inputValues.begin(), inputValues.end())
+				(inputValues[0] + inputValues[1]) / 2.0
 			};
 
 			myNet.feedForward(inputValues);
@@ -32,9 +41,21 @@ int main()
 
 			double error = outputValues[0] - targetValues[0];
 
-			std::cout << "Error: ";
-			std::cout << std::abs(error);
-			std::cout << std::endl;
+			batchMeanError += error;
+			batchMaxError = std::max<double>(batchMaxError, error);
+
+			if (batchIndex++ == batchSize)
+			{
+				std::cout << "Batch error (" << batchSize << " iterations, max/mean): ";
+				std::cout << std::abs(batchMaxError);
+				std::cout << " / ";
+				std::cout << std::abs(batchMeanError / batchSize);
+				std::cout << std::endl;
+
+				batchIndex = 0;
+				batchMaxError = 0.0;
+				batchMeanError = 0.0;
+			}
 
 			myNet.backProp(targetValues);
 		}
