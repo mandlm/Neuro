@@ -13,8 +13,19 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        neuroui.cpp
+        neuroui.cpp \
+    ../../Layer.cpp \
+    ../../Net.cpp \
+    ../../Neuron.cpp \
+    netlearner.cpp
 
-HEADERS  += neuroui.h
+HEADERS  += neuroui.h \
+    ../../Layer.h \
+    ../../Net.h \
+    ../../Neuron.h \
+    netlearner.h
 
 FORMS    += neuroui.ui
+
+RESOURCES += \
+    icons.qrc

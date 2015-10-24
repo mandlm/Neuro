@@ -24,7 +24,7 @@ void Layer::setOutputValues(const std::vector<double> & outputValues)
 
 void Layer::feedForward(const Layer &inputLayer)
 {	
-	for (int neuronNumber = 0; neuronNumber < sizeWithoutBiasNeuron(); ++neuronNumber)
+    for (size_t neuronNumber = 0; neuronNumber < sizeWithoutBiasNeuron(); ++neuronNumber)
 	{
 		at(neuronNumber).feedForward(inputLayer.getWeightedSum(neuronNumber));
 	}
