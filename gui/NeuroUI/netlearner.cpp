@@ -54,6 +54,8 @@ void NetLearner::run()
             }
 
             myNet.backProp(targetValues);
+
+            emit progress((double)iteration / (double)numIterations);
         }
     }
     catch (std::exception &ex)

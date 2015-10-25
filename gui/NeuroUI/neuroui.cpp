@@ -23,6 +23,7 @@ void NeuroUI::on_runButton_clicked()
     }
 
     connect(m_netLearner.get(), &NetLearner::logMessage, this, &NeuroUI::logMessage);
+    connect(m_netLearner.get(), &NetLearner::progress, this, &NeuroUI::progress);
 
     connect(m_netLearner.get(), &NetLearner::started, this, &NeuroUI::netLearnerStarted);
     connect(m_netLearner.get(), &NetLearner::finished, this, &NeuroUI::netLearnerFinished);
@@ -39,9 +40,19 @@ void NeuroUI::logMessage(const QString &logMessage)
 void NeuroUI::netLearnerStarted()
 {
     ui->runButton->setEnabled(false);
+    ui->progressBar->setValue(0);
 }
 
 void NeuroUI::netLearnerFinished()
 {
     ui->runButton->setEnabled(true);
+    ui->progressBar->setValue(0);
+}
+
+void NeuroUI::progress(double progress)
+{
+    double range = ui->progressBar->maximum() - ui->progressBar->minimum();
+    int value = ui->progressBar->minimum() + (int)(progress * range);
+
+    ui->progressBar->setValue(value);
 }

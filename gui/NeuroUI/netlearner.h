@@ -12,6 +12,7 @@ private:
 
 signals:
     void logMessage(const QString &logMessage);
+    void progress(double progress);
 };
 
 #endif // NETLEARNER_H

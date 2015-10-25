@@ -27,6 +27,7 @@ private slots:
     void logMessage(const QString &logMessage);
     void netLearnerStarted();
     void netLearnerFinished();
+    void progress(double progress);
 
 private:
     Ui::NeuroUI *ui;
