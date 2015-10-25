@@ -1,2 +1,5 @@
-<RCC/>
-
+<RCC>
+    <qresource prefix="/">
+        <file>icons/NeuroUI Icon.png</file>
+    </qresource>
+</RCC>
