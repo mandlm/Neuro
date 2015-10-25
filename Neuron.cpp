@@ -111,6 +111,11 @@ double Neuron::getOutputWeight(size_t index) const
 
 void Neuron::setOutputWeight(size_t index, double value)
 {
-	outputWeights.at(index) = value;
+    outputWeights.at(index) = value;
+}
+
+size_t Neuron::getNumOutputWeights() const
+{
+    return outputWeights.size();
 }
 

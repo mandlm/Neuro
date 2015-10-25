@@ -12,7 +12,7 @@ void NetLearner::run()
         double batchMaxError = 0.0;
         double batchMeanError = 0.0;
 
-        size_t numIterations = 1000000;
+        size_t numIterations = 100000;
         for (size_t iteration = 0; iteration < numIterations; ++iteration)
         {
             std::vector<double> inputValues =
@@ -57,6 +57,8 @@ void NetLearner::run()
 
             emit progress((double)iteration / (double)numIterations);
         }
+
+        myNet.save("mynet.nnet");
     }
     catch (std::exception &ex)
     {

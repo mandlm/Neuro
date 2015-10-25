@@ -21,7 +21,7 @@ int main()
 		double batchMaxError = 0.0;
 		double batchMeanError = 0.0;
 
-		size_t numIterations = 1000000;
+		size_t numIterations = 100000;
 		for (size_t iteration = 0; iteration < numIterations; ++iteration)
 		{
 			std::vector<double> inputValues =
@@ -59,6 +59,9 @@ int main()
 
 			myNet.backProp(targetValues);
 		}
+
+		myNet.save("mynet.nnet");
+		Net copyNet("mynet.nnet");
 	}
 	catch (std::exception &ex)
 	{

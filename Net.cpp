@@ -1,5 +1,9 @@
 #include "Net.h"
 
+#include <string>
+#include <iostream>
+#include <fstream>
+
 Net::Net(std::initializer_list<size_t> layerSizes)
 {
 	if (layerSizes.size() < 2)
@@ -21,6 +25,11 @@ Net::Net(std::initializer_list<size_t> layerSizes)
 
 		currentLayer.connectTo(nextLayer);
 	}
+}
+
+Net::Net(const std::string &filename)
+{
+    load(filename);
 }
 
 void Net::feedForward(const std::vector<double> &inputValues)
@@ -103,5 +112,89 @@ void Net::backProp(const std::vector<double> &targetValues)
 		Layer &prevLayer = *(it - 1);
 
 		currentLayer.updateInputWeights(prevLayer);
-	}
+    }
+}
+
+void Net::save(const std::string &filename)
+{
+    std::ofstream outFile;
+    outFile.open(filename);
+    if (!outFile.is_open())
+    {
+        throw std::exception("unable to open output file");
+    }
+
+    outFile << size() << std::endl;
+    for (const Layer &layer : *this)
+    {
+		outFile << layer.size() << std::endl;
+        outFile << layer.hasBiasNeuron() << std::endl;
+
+        for (const Neuron &neuron : layer)
+        {
+            size_t numOutputWeights = neuron.getNumOutputWeights();
+            outFile << numOutputWeights << std::endl;
+
+            for (size_t outputWeightIndex = 0; outputWeightIndex < numOutputWeights; ++outputWeightIndex)
+            {
+                outFile << neuron.getOutputWeight(outputWeightIndex) << std::endl;
+            }
+        }
+    }
+
+    outFile.close();
+}
+
+void Net::load(const std::string &filename)
+{
+    std::ifstream inFile;
+    inFile.open(filename, std::ios::binary);
+    if (!inFile.is_open())
+    {
+        throw std::exception("unable to open input file");
+    }
+
+    clear();
+
+	std::string buffer;
+
+	getline(inFile, buffer);
+    size_t numLayers = std::stol(buffer);
+
+    for (size_t layerIndex = 0; layerIndex < numLayers; ++layerIndex)
+    {
+
+		getline(inFile, buffer);
+		size_t numNeurons = std::stol(buffer);
+
+		getline(inFile, buffer);
+		bool hasBiasNeuron = std::stol(buffer) != 0;
+
+        size_t numNeuronsWithoutBiasNeuron = hasBiasNeuron ? numNeurons - 1 : numNeurons;
+
+        Layer newLayer(numNeuronsWithoutBiasNeuron);
+        if (hasBiasNeuron)
+        {
+            newLayer.addBiasNeuron();
+        }
+
+        for (size_t neuronIndex = 0; neuronIndex < numNeurons; ++neuronIndex)
+        {
+			getline(inFile, buffer);
+			size_t numWeights = std::stol(buffer);
+
+			std::list<double> outputWeights;
+            for (size_t weightIndex = 0; weightIndex < numWeights; ++weightIndex)
+            {
+				getline(inFile, buffer);
+				outputWeights.push_back(std::stod(buffer));
+            }
+
+			newLayer.at(neuronIndex).createOutputWeights(outputWeights);
+		}
+
+        push_back(newLayer);
+    }
+
+	inFile.close();
 }

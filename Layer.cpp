@@ -46,7 +46,7 @@ void Layer::connectTo(const Layer & nextLayer)
 {
 	for (Neuron &neuron : *this)
 	{
-		neuron.createOutputWeights(nextLayer.sizeWithoutBiasNeuron(), 1.0);
+        neuron.createRandomOutputWeights(nextLayer.sizeWithoutBiasNeuron());
 	}
 }
 
@@ -72,12 +72,17 @@ void Layer::updateInputWeights(Layer & prevLayer)
 void Layer::addBiasNeuron()
 {
 	push_back(Neuron(1.0));
-	hasBiasNeuron = true;
+    m_hasBiasNeuron = true;
+}
+
+bool Layer::hasBiasNeuron() const
+{
+    return m_hasBiasNeuron;
 }
 
 size_t Layer::sizeWithoutBiasNeuron() const
 {
-	if (hasBiasNeuron)
+    if (m_hasBiasNeuron)
 	{
 		return size() - 1;
 	}

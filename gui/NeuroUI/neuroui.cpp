@@ -6,6 +6,8 @@ NeuroUI::NeuroUI(QWidget *parent) :
     ui(new Ui::NeuroUI)
 {
     ui->setupUi(this);
+
+    ui->logView->addItem("Ready.");
 }
 
 NeuroUI::~NeuroUI()

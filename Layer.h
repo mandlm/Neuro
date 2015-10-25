@@ -7,7 +7,7 @@
 class Layer : public std::vector < Neuron >
 {
 private:
-	bool hasBiasNeuron = false;
+    bool m_hasBiasNeuron = false;
 
 public:
 	Layer(size_t numNeurons);
@@ -21,5 +21,6 @@ public:
 
 	void addBiasNeuron();
 
+    bool hasBiasNeuron() const;
 	size_t sizeWithoutBiasNeuron() const;
 };

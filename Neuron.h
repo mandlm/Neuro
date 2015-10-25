@@ -32,6 +32,7 @@ public:
 
 	double getOutputWeight(size_t index) const;
 	void setOutputWeight(size_t index, double value);
+    size_t getNumOutputWeights() const;
 
 private:
 	static double transferFunction(double inputValue);
