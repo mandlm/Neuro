@@ -1,16 +1,22 @@
 #include "netlearner.h"
 #include "../../Net.h"
 
+#include <QElapsedTimer>
+
 void NetLearner::run()
 {
     try
     {
+        QElapsedTimer timer;
+
         Net myNet({2, 3, 1});
 
         size_t batchSize = 5000;
         size_t batchIndex = 0;
         double batchMaxError = 0.0;
         double batchMeanError = 0.0;
+
+        timer.start();
 
         size_t numIterations = 1000000;
         for (size_t iteration = 0; iteration < numIterations; ++iteration)
@@ -58,6 +64,13 @@ void NetLearner::run()
 
             emit progress((double)iteration / (double)numIterations);
         }
+
+        QString timerLogString;
+        timerLogString.append("Elapsed time: ");
+        timerLogString.append(QString::number(timer.elapsed() / 1000.0));
+        timerLogString.append(" seconds");
+
+        emit logMessage(timerLogString);
 
         myNet.save("mynet.nnet");
     }
