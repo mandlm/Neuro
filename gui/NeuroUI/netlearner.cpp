@@ -9,7 +9,15 @@ void NetLearner::run()
     {
         QElapsedTimer timer;
 
-        Net myNet({2, 3, 1});
+        Net myNet;
+        try
+        {
+            myNet.load("mynet.nnet");
+        }
+        catch (...)
+        {
+            myNet.initialize({2, 3, 1});
+        }
 
         size_t batchSize = 5000;
         size_t batchIndex = 0;
@@ -54,6 +62,7 @@ void NetLearner::run()
 
                 emit logMessage(logString);
                 emit currentNetError(batchMaxError);
+                emit progress((double)iteration / (double)numIterations);
 
                 batchIndex = 0;
                 batchMaxError = 0.0;
@@ -61,8 +70,6 @@ void NetLearner::run()
             }
 
             myNet.backProp(targetValues);
-
-            emit progress((double)iteration / (double)numIterations);
         }
 
         QString timerLogString;

@@ -7,8 +7,11 @@
 class Net : public std::vector < Layer >
 {
 public:
+    Net();
 	Net(std::initializer_list<size_t> layerSizes);
     Net(const std::string &filename);
+
+    void initialize(std::initializer_list<size_t> layerSizes);
 
 	void feedForward(const std::vector<double> &inputValues);
 	std::vector<double> getOutput();

@@ -4,32 +4,44 @@
 #include <iostream>
 #include <fstream>
 
+Net::Net()
+{
+
+}
+
 Net::Net(std::initializer_list<size_t> layerSizes)
 {
-	if (layerSizes.size() < 2)
-	{
-		throw std::exception("A net needs at least 2 layers");
-	}
-
-	for (size_t numNeurons : layerSizes)
-	{
-		push_back(Layer(numNeurons));
-	}
-
-	for (auto layerIt = begin(); layerIt != end() - 1; ++layerIt)
-	{
-		Layer &currentLayer = *layerIt;
-		const Layer &nextLayer = *(layerIt + 1);
-
-		currentLayer.addBiasNeuron();
-
-		currentLayer.connectTo(nextLayer);
-	}
+    initialize(layerSizes);
 }
 
 Net::Net(const std::string &filename)
 {
     load(filename);
+}
+
+void Net::initialize(std::initializer_list<size_t> layerSizes)
+{
+    clear();
+
+    if (layerSizes.size() < 2)
+    {
+        throw std::exception("A net needs at least 2 layers");
+    }
+
+    for (size_t numNeurons : layerSizes)
+    {
+        push_back(Layer(numNeurons));
+    }
+
+    for (auto layerIt = begin(); layerIt != end() - 1; ++layerIt)
+    {
+        Layer &currentLayer = *layerIt;
+        const Layer &nextLayer = *(layerIt + 1);
+
+        currentLayer.addBiasNeuron();
+
+        currentLayer.connectTo(nextLayer);
+    }
 }
 
 void Net::feedForward(const std::vector<double> &inputValues)
