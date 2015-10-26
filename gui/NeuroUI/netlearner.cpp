@@ -1,5 +1,6 @@
 #include "netlearner.h"
 #include "../../Net.h"
+#include "trainingdataloader.h"
 
 #include <QElapsedTimer>
 
@@ -8,6 +9,9 @@ void NetLearner::run()
     try
     {
         QElapsedTimer timer;
+
+        TrainingDataLoader dataLoader;
+        dataLoader.addSamples("../NeuroUI/training data/mnist_train0.jpg", 0);
 
         Net myNet;
         try
@@ -26,7 +30,7 @@ void NetLearner::run()
 
         timer.start();
 
-        size_t numIterations = 1000000;
+        size_t numIterations = 2000000;
         for (size_t iteration = 0; iteration < numIterations; ++iteration)
         {
             std::vector<double> inputValues =
