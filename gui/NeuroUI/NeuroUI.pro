@@ -17,13 +17,15 @@ SOURCES += main.cpp\
     ../../Layer.cpp \
     ../../Net.cpp \
     ../../Neuron.cpp \
-    netlearner.cpp
+    netlearner.cpp \
+    errorplotter.cpp
 
 HEADERS  += neuroui.h \
     ../../Layer.h \
     ../../Net.h \
     ../../Neuron.h \
-    netlearner.h
+    netlearner.h \
+    errorplotter.h
 
 FORMS    += neuroui.ui
 

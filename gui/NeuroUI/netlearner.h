@@ -13,6 +13,7 @@ private:
 signals:
     void logMessage(const QString &logMessage);
     void progress(double progress);
+    void currentNetError(double error);
 };
 
 #endif // NETLEARNER_H

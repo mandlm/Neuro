@@ -12,7 +12,7 @@ void NetLearner::run()
         double batchMaxError = 0.0;
         double batchMeanError = 0.0;
 
-        size_t numIterations = 100000;
+        size_t numIterations = 1000000;
         for (size_t iteration = 0; iteration < numIterations; ++iteration)
         {
             std::vector<double> inputValues =
@@ -47,6 +47,7 @@ void NetLearner::run()
                 logString.append(QString::number(std::abs(batchMeanError / batchSize)));
 
                 emit logMessage(logString);
+                emit currentNetError(batchMaxError);
 
                 batchIndex = 0;
                 batchMaxError = 0.0;

@@ -18,6 +18,7 @@ NeuroUI::~NeuroUI()
 void NeuroUI::on_runButton_clicked()
 {
     ui->logView->clear();
+    ui->errorPlotter->clear();
 
     if (m_netLearner == nullptr)
     {
@@ -29,6 +30,8 @@ void NeuroUI::on_runButton_clicked()
 
     connect(m_netLearner.get(), &NetLearner::started, this, &NeuroUI::netLearnerStarted);
     connect(m_netLearner.get(), &NetLearner::finished, this, &NeuroUI::netLearnerFinished);
+
+    connect(m_netLearner.get(), &NetLearner::currentNetError, ui->errorPlotter, &ErrorPlotter::addErrorValue);
 
     m_netLearner->start();
 }
