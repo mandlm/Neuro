@@ -17,7 +17,7 @@ public:
 
 	void setOutputValue(double value);
 	void feedForward(double inputValue);
-	double getWeightedOutputValue(unsigned int outputNeuron) const;
+    double getWeightedOutputValue(size_t outputNeuron) const;
 	
 	void createRandomOutputWeights(size_t numberOfWeights);
 	void createOutputWeights(std::list<double> weights);

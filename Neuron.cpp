@@ -30,7 +30,7 @@ void Neuron::feedForward(double inputValue)
 	outputValue = transferFunction(inputValue);
 }
 
-double Neuron::getWeightedOutputValue(unsigned int outputNeuron) const
+double Neuron::getWeightedOutputValue(size_t outputNeuron) const
 {
 	if (outputNeuron < outputWeights.size())
 	{

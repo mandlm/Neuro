@@ -30,7 +30,7 @@ void Layer::feedForward(const Layer &inputLayer)
 	}
 }
 
-double Layer::getWeightedSum(int outputNeuron) const
+double Layer::getWeightedSum(size_t outputNeuron) const
 {
 	double sum = 0.0;
 
