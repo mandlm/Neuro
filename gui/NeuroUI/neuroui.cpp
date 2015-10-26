@@ -23,15 +23,15 @@ void NeuroUI::on_runButton_clicked()
     if (m_netLearner == nullptr)
     {
         m_netLearner.reset(new NetLearner);
+
+        connect(m_netLearner.get(), &NetLearner::logMessage, this, &NeuroUI::logMessage);
+        connect(m_netLearner.get(), &NetLearner::progress, this, &NeuroUI::progress);
+
+        connect(m_netLearner.get(), &NetLearner::started, this, &NeuroUI::netLearnerStarted);
+        connect(m_netLearner.get(), &NetLearner::finished, this, &NeuroUI::netLearnerFinished);
+
+        connect(m_netLearner.get(), &NetLearner::currentNetError, ui->errorPlotter, &ErrorPlotter::addErrorValue);
     }
-
-    connect(m_netLearner.get(), &NetLearner::logMessage, this, &NeuroUI::logMessage);
-    connect(m_netLearner.get(), &NetLearner::progress, this, &NeuroUI::progress);
-
-    connect(m_netLearner.get(), &NetLearner::started, this, &NeuroUI::netLearnerStarted);
-    connect(m_netLearner.get(), &NetLearner::finished, this, &NeuroUI::netLearnerFinished);
-
-    connect(m_netLearner.get(), &NetLearner::currentNetError, ui->errorPlotter, &ErrorPlotter::addErrorValue);
 
     m_netLearner->start();
 }
