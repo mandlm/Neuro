@@ -1,5 +1,7 @@
 #include "Layer.h"
 
+#include <stdexcept>
+
 Layer::Layer(size_t numNeurons)
 {
 	for (unsigned int i = 0; i < numNeurons; ++i)
@@ -12,7 +14,7 @@ void Layer::setOutputValues(const std::vector<double> & outputValues)
 {
 	if (size() - 1 != outputValues.size())
 	{
-		throw std::exception("The number of output values has to match the layer size");
+        throw std::runtime_error("The number of output values has to match the layer size");
 	}
 
 	auto neuronIt = begin();

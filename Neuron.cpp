@@ -1,6 +1,8 @@
-#pragma once
-
 #include "Neuron.h"
+
+#include <cmath>
+#include <random>
+
 #include "Layer.h"
 
 Neuron::Neuron(double value)

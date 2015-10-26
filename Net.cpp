@@ -3,6 +3,8 @@
 #include <string>
 #include <iostream>
 #include <fstream>
+#include <stdexcept>
+#include <cmath>
 
 Net::Net()
 {
@@ -25,7 +27,7 @@ void Net::initialize(std::initializer_list<size_t> layerSizes)
 
     if (layerSizes.size() < 2)
     {
-        throw std::exception("A net needs at least 2 layers");
+        throw std::runtime_error("A net needs at least 2 layers");
     }
 
     for (size_t numNeurons : layerSizes)
@@ -50,7 +52,7 @@ void Net::feedForward(const std::vector<double> &inputValues)
 
 	if (inputLayer.size() - 1 != inputValues.size())
 	{
-		throw std::exception("The number of input values has to match the input layer size");
+        throw std::runtime_error("The number of input values has to match the input layer size");
 	}
 
 	inputLayer.setOutputValues(inputValues);
@@ -83,7 +85,7 @@ void Net::backProp(const std::vector<double> &targetValues)
 
 	if (targetValues.size() != outputLayer.size())
 	{
-		throw std::exception("The number of target values has to match the output layer size");
+        throw std::runtime_error("The number of target values has to match the output layer size");
 	}
 
 	std::vector<double> resultValues = getOutput();
@@ -133,7 +135,7 @@ void Net::save(const std::string &filename)
     outFile.open(filename);
     if (!outFile.is_open())
     {
-        throw std::exception("unable to open output file");
+        throw std::runtime_error("unable to open output file");
     }
 
     outFile << size() << std::endl;
@@ -163,7 +165,7 @@ void Net::load(const std::string &filename)
     inFile.open(filename, std::ios::binary);
     if (!inFile.is_open())
     {
-        throw std::exception("unable to open input file");
+        throw std::runtime_error("unable to open input file");
     }
 
     clear();
