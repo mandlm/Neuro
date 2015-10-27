@@ -10,7 +10,7 @@
 class TrainingDataLoader
 {
 public:
-    using SampleData = double[64];
+    using SampleData = double[32*32];
     using SampleId = unsigned int;
     using Sample = std::pair<SampleId, SampleData>;
 
@@ -21,6 +21,8 @@ public:
     TrainingDataLoader();
 
     void addSamples(const QString &sourceFile, SampleId sampleId);
+
+    const Sample &getRandomSample() const;
 };
 
 #endif // TRAININGDATALOADER_H
