@@ -3,6 +3,7 @@
 #include "trainingdataloader.h"
 
 #include <QElapsedTimer>
+#include <QImage>
 
 void NetLearner::run()
 {
@@ -46,6 +47,17 @@ void NetLearner::run()
         for (size_t iteration = 0; iteration < numIterations; ++iteration)
         {
             const TrainingDataLoader::Sample &trainingSample = dataLoader.getRandomSample();
+
+            QImage sampleImage(32, 32, QImage::Format_ARGB32);
+            for (unsigned int y = 0; y < 32; ++y)
+            {
+                for (unsigned int x = 0; x < 32; ++x)
+                {
+                    uchar grayValue = trainingSample.second[x + y * 32] * 255;
+                    sampleImage.setPixel(x, y, qRgb(grayValue, grayValue, grayValue));
+                }
+            }
+            emit sampleImageLoaded(sampleImage);
 
             std::vector<double> targetValues =
             {

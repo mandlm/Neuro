@@ -28,6 +28,7 @@ private slots:
     void netLearnerStarted();
     void netLearnerFinished();
     void progress(double progress);
+    void setImage(const QImage &image);
 
 private:
     Ui::NeuroUI *ui;

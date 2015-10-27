@@ -31,6 +31,8 @@ void NeuroUI::on_runButton_clicked()
         connect(m_netLearner.get(), &NetLearner::finished, this, &NeuroUI::netLearnerFinished);
 
         connect(m_netLearner.get(), &NetLearner::currentNetError, ui->errorPlotter, &ErrorPlotter::addErrorValue);
+
+        connect(m_netLearner.get(), &NetLearner::sampleImageLoaded, this, &NeuroUI::setImage);
     }
 
     m_netLearner->start();
@@ -60,4 +62,11 @@ void NeuroUI::progress(double progress)
     int value = ui->progressBar->minimum() + (int)(progress * range);
 
     ui->progressBar->setValue(value);
+}
+
+void NeuroUI::setImage(const QImage &image)
+{
+    QPixmap pixmap;
+    pixmap.convertFromImage(image);
+    ui->label->setPixmap(pixmap);
 }

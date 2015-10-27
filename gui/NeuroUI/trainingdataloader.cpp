@@ -37,8 +37,9 @@ void TrainingDataLoader::addSamples(const QString &sourceFile, TrainingDataLoade
             {
                 for (int x = 0; x < scanWindow.width(); ++x)
                 {
-                    QRgb color = sourceImage.pixel(scanPosition.x() + x, scanPosition.y() + y);
-                    sample.second[x + y * scanWindow.height()] = qGray(color) / 255.0;
+                    QRgb pixelColor = sourceImage.pixel(scanPosition.x() + x, scanPosition.y() + y);
+                    uint grayValue = qGray(pixelColor);
+                    sample.second[x + y * scanWindow.height()] = grayValue / 255.0;
                 }
             }
 
