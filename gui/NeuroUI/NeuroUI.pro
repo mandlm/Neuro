@@ -19,7 +19,7 @@ SOURCES += main.cpp\
     ../../Neuron.cpp \
     netlearner.cpp \
     errorplotter.cpp \
-    trainingdataloader.cpp
+    mnistloader.cpp
 
 HEADERS  += neuroui.h \
     ../../Layer.h \
@@ -27,7 +27,7 @@ HEADERS  += neuroui.h \
     ../../Neuron.h \
     netlearner.h \
     errorplotter.h \
-    trainingdataloader.h
+    mnistloader.h
 
 FORMS    += neuroui.ui
 
