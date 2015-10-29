@@ -15,8 +15,8 @@ void NetLearner::run()
         emit progress(0.0);
 
         MnistLoader mnistLoader;
-        mnistLoader.load("../NeuroUI/MNIST Aatabase/train-images.idx3-ubyte",
-                         "../NeuroUI/MNIST Aatabase/train-labels.idx1-ubyte");
+        mnistLoader.load("../NeuroUI/MNIST Database/train-images.idx3-ubyte",
+                         "../NeuroUI/MNIST Database/train-labels.idx1-ubyte");
 
         emit logMessage("done");
         emit progress(0.0);
