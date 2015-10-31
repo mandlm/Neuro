@@ -21,6 +21,8 @@ void NetLearner::run()
         emit logMessage("done");
         emit progress(0.0);
 
+        return;
+
         Net digitClassifier({32*32, 16*16, 32, 1});
 
         timer.start();

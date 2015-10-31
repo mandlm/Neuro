@@ -29,7 +29,7 @@ void MnistLoader::loadDatabase(const std::string &fileName)
     }
 
     int32_t magicNumber = readInt32(databaseFile);
-    if (magicNumber != 2051)
+    if (magicNumber != DatabaseFileMagicNumber)
     {
         throw std::runtime_error("unexpected data reading MNIST database file");
     }
@@ -38,18 +38,19 @@ void MnistLoader::loadDatabase(const std::string &fileName)
     int32_t sampleWidth = readInt32(databaseFile);
     int32_t sampleHeight = readInt32(databaseFile);
 
-    std::list<std::unique_ptr<int8_t[]>> samples;
-
-    for (size_t sampleIndex = 0; sampleIndex < sampleCount; ++sampleIndex)
+    if (sampleWidth != SampleWidth || sampleHeight != SampleHeight)
     {
-        std::unique_ptr<int8_t[]> sampleData = std::make_unique<int8_t[]>(sampleWidth * sampleHeight);
-
-        databaseFile.read(reinterpret_cast<char *>(sampleData.get()), sampleWidth * sampleHeight);
-
-        samples.push_back(std::move(sampleData));
+        throw std::runtime_error("unexpected sample size loading MNIST database");
     }
 
-    return;
+    for (int32_t sampleIndex = 0; sampleIndex < sampleCount; ++sampleIndex)
+    {
+        std::unique_ptr<MnistSample> sample = std::make_unique<MnistSample>();
+
+        databaseFile.read(reinterpret_cast<char *>(sample->data), sampleWidth * sampleHeight);
+
+        samples.push_back(std::move(sample));
+    }
 }
 
 void MnistLoader::loadLabels(const std::string &fileName)
@@ -63,21 +64,22 @@ void MnistLoader::loadLabels(const std::string &fileName)
     }
 
     int32_t magicNumber = readInt32(labelFile);
-    if (magicNumber != 2049)
+    if (magicNumber != LabelFileMagicNumber)
     {
         throw std::runtime_error("unexpected data reading MNIST label file");
     }
 
     int32_t labelCount = readInt32(labelFile);
-
-    std::list<int8_t> labels;
-
-    for (size_t labelIndex = 0; labelIndex < labelCount; ++labelIndex)
+    if (labelCount != static_cast<int32_t>(samples.size()))
     {
-        labels.push_back(readInt8(labelFile));
+        throw std::runtime_error("MNIST database and label files don't match in size");
     }
 
-    return;
+    auto sampleIt = samples.begin();
+    for (int32_t labelIndex = 0; labelIndex < labelCount; ++labelIndex)
+    {
+        (*sampleIt++)->label = readInt8(labelFile);
+    }
 }
 
 int8_t MnistLoader::readInt8(std::ifstream &file)
