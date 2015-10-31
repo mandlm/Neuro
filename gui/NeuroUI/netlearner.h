@@ -14,6 +14,7 @@ signals:
     void logMessage(const QString &logMessage);
     void progress(double progress);
     void currentNetError(double error);
+    void sampleImageLoaded(const QImage &image);
 };
 
 #endif // NETLEARNER_H

@@ -21,7 +21,7 @@ void Layer::setOutputValues(const std::vector<double> & outputValues)
 	for (const double &value : outputValues)
 	{
 		(neuronIt++)->setOutputValue(value);
-	}
+    }
 }
 
 void Layer::feedForward(const Layer &inputLayer)
@@ -54,7 +54,7 @@ void Layer::connectTo(const Layer & nextLayer)
 
 void Layer::updateInputWeights(Layer & prevLayer)
 {
-	static const double trainingRate = 0.3;
+    static const double trainingRate = 0.2;
 
 	for (size_t targetLayerIndex = 0; targetLayerIndex < sizeWithoutBiasNeuron(); ++targetLayerIndex)
 	{

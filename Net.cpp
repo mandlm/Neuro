@@ -63,7 +63,7 @@ void Net::feedForward(const std::vector<double> &inputValues)
 		Layer &nextLayer = *(layerIt + 1);
 
 		nextLayer.feedForward(currentLayer);
-	}
+    }
 }
 
 std::vector<double> Net::getOutput()

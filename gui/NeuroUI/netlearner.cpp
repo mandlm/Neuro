@@ -1,7 +1,9 @@
 #include "netlearner.h"
 #include "../../Net.h"
+#include "mnistloader.h"
 
 #include <QElapsedTimer>
+#include <QImage>
 
 void NetLearner::run()
 {
@@ -9,67 +11,54 @@ void NetLearner::run()
     {
         QElapsedTimer timer;
 
-        Net myNet;
-        try
-        {
-            myNet.load("mynet.nnet");
-        }
-        catch (...)
-        {
-            myNet.initialize({2, 3, 1});
-        }
+        emit logMessage("Loading training data...");
 
-        size_t batchSize = 5000;
-        size_t batchIndex = 0;
-        double batchMaxError = 0.0;
-        double batchMeanError = 0.0;
+        MnistLoader mnistLoader;
+        mnistLoader.load("../NeuroUI/MNIST Database/train-images.idx3-ubyte",
+                         "../NeuroUI/MNIST Database/train-labels.idx1-ubyte");
+
+        emit logMessage("done");
+
+        Net digitClassifier({28*28, 256, 1});
 
         timer.start();
 
-        size_t numIterations = 1000000;
+        size_t numIterations = 100000;
         for (size_t iteration = 0; iteration < numIterations; ++iteration)
         {
-            std::vector<double> inputValues =
-            {
-                std::rand() / (double)RAND_MAX,
-                std::rand() / (double)RAND_MAX
-            };
+            auto trainingSample = mnistLoader.getRandomSample();
+
+            QImage trainingImage(trainingSample.data, 28, 28, QImage::Format_Grayscale8);
+            emit sampleImageLoaded(trainingImage);
 
             std::vector<double> targetValues =
             {
-                (inputValues[0] + inputValues[1]) / 2.0
+                trainingSample.label / 10.0
             };
 
-            myNet.feedForward(inputValues);
+            std::vector<double> trainingData;
+            trainingData.reserve(28*28);
+            for (const uint8_t &val : trainingSample.data)
+            {
+                trainingData.push_back(val / 255.0);
+            }
 
-            std::vector<double> outputValues = myNet.getOutput();
+            digitClassifier.feedForward(trainingData);
+
+            std::vector<double> outputValues = digitClassifier.getOutput();
 
             double error = outputValues[0] - targetValues[0];
 
-            batchMeanError += error;
-            batchMaxError = std::max<double>(batchMaxError, error);
+            QString logString;
 
-            if (batchIndex++ == batchSize)
-            {
-                QString logString;
+            logString.append("Error: ");
+            logString.append(QString::number(std::abs(error)));
 
-                logString.append("Batch error (");
-                logString.append(QString::number(batchSize));
-                logString.append(" iterations, max/mean): ");
-                logString.append(QString::number(std::abs(batchMaxError)));
-                logString.append(" / ");
-                logString.append(QString::number(std::abs(batchMeanError / batchSize)));
+            emit logMessage(logString);
+            emit currentNetError(error);
+            emit progress((double)iteration / (double)numIterations);
 
-                emit logMessage(logString);
-                emit currentNetError(batchMaxError);
-                emit progress((double)iteration / (double)numIterations);
-
-                batchIndex = 0;
-                batchMaxError = 0.0;
-                batchMeanError = 0.0;
-            }
-
-            myNet.backProp(targetValues);
+            digitClassifier.backProp(targetValues);
         }
 
         QString timerLogString;
@@ -79,7 +68,7 @@ void NetLearner::run()
 
         emit logMessage(timerLogString);
 
-        myNet.save("mynet.nnet");
+        digitClassifier.save("DigitClassifier.nnet");
     }
     catch (std::exception &ex)
     {
