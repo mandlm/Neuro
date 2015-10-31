@@ -24,14 +24,6 @@ void Layer::setOutputValues(const std::vector<double> & outputValues)
     }
 }
 
-void Layer::setOutputValues(const double *outputValues)
-{
-    for (size_t neuronIndex = 0; neuronIndex < size(); ++neuronIndex)
-    {
-        at(neuronIndex).setOutputValue(outputValues[neuronIndex]);
-    }
-}
-
 void Layer::feedForward(const Layer &inputLayer)
 {	
     for (size_t neuronNumber = 0; neuronNumber < sizeWithoutBiasNeuron(); ++neuronNumber)

@@ -13,11 +13,10 @@ public:
 	Layer(size_t numNeurons);
 
 	void setOutputValues(const std::vector<double> & outputValues);
-    void setOutputValues(const double *outputValues);
 
 	void feedForward(const Layer &inputLayer);
     double getWeightedSum(size_t outputNeuron) const;
-	void connectTo(const Layer & nextLayer);
+    void connectTo(const Layer &nextLayer);
 
 	void updateInputWeights(Layer &prevLayer);
 

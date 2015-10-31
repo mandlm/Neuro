@@ -15,7 +15,6 @@ public:
     void initialize(std::initializer_list<size_t> layerSizes);
 
 	void feedForward(const std::vector<double> &inputValues);
-    void feedForward(const double *inputValues);
 	std::vector<double> getOutput();
 	void backProp(const std::vector<double> &targetValues);
 
