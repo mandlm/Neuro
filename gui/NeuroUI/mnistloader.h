@@ -2,7 +2,7 @@
 #define MNISTLOADER_H
 
 #include <string>
-#include <list>
+#include <vector>
 #include <memory>
 #include <inttypes.h>
 
@@ -26,12 +26,12 @@ public:
     using MnistSample = Sample<SampleWidth, SampleHeight>;
 
 private:
-    std::list<std::unique_ptr<MnistSample>> samples;
+    std::vector<std::unique_ptr<MnistSample>> samples;
 
 public:
-    MnistLoader();
-
     void load(const std::string &databaseFileName, const std::string &labelsFileName);
+
+    const MnistSample &getRandomSample() const;
 
 private:
     void loadDatabase(const std::string &fileName);

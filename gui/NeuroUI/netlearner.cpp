@@ -12,30 +12,38 @@ void NetLearner::run()
         QElapsedTimer timer;
 
         emit logMessage("Loading training data...");
-        emit progress(0.0);
 
         MnistLoader mnistLoader;
         mnistLoader.load("../NeuroUI/MNIST Database/train-images.idx3-ubyte",
                          "../NeuroUI/MNIST Database/train-labels.idx1-ubyte");
 
         emit logMessage("done");
-        emit progress(0.0);
 
-        return;
-
-        Net digitClassifier({32*32, 16*16, 32, 1});
+        Net digitClassifier({28*28, 256, 1});
 
         timer.start();
 
-        size_t numIterations = 10000;
+        size_t numIterations = 100000;
         for (size_t iteration = 0; iteration < numIterations; ++iteration)
         {
+            auto trainingSample = mnistLoader.getRandomSample();
+
+            QImage trainingImage(trainingSample.data, 28, 28, QImage::Format_Grayscale8);
+            emit sampleImageLoaded(trainingImage);
+
             std::vector<double> targetValues =
             {
-                //trainingSample.first / 10.0
+                trainingSample.label / 10.0
             };
 
-            //digitClassifier.feedForward(trainingSample.second);
+            std::vector<double> trainingData;
+            trainingData.reserve(28*28);
+            for (const uint8_t &val : trainingSample.data)
+            {
+                trainingData.push_back(val / 255.0);
+            }
+
+            digitClassifier.feedForward(trainingData);
 
             std::vector<double> outputValues = digitClassifier.getOutput();
 

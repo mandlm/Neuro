@@ -1,21 +1,18 @@
 #include "mnistloader.h"
 
 #include <fstream>
-#include <functional>
-#include <memory>
-#include <list>
-
-#include <intrin.h>
-
-MnistLoader::MnistLoader()
-{
-
-}
 
 void MnistLoader::load(const std::string &databaseFileName, const std::string &labelsFileName)
 {
     loadDatabase(databaseFileName);
     loadLabels(labelsFileName);
+}
+
+const MnistLoader::MnistSample &MnistLoader::getRandomSample() const
+{
+    size_t sampleIndex = (std::rand() * (samples.size() - 1)) / RAND_MAX;
+
+    return *(samples[sampleIndex].get());
 }
 
 void MnistLoader::loadDatabase(const std::string &fileName)
@@ -42,6 +39,8 @@ void MnistLoader::loadDatabase(const std::string &fileName)
     {
         throw std::runtime_error("unexpected sample size loading MNIST database");
     }
+
+    samples.reserve(samples.size() + sampleCount);
 
     for (int32_t sampleIndex = 0; sampleIndex < sampleCount; ++sampleIndex)
     {
