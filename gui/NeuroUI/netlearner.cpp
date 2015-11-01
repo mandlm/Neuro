@@ -26,10 +26,10 @@ void NetLearner::run()
         size_t numIterations = 100000;
         for (size_t iteration = 0; iteration < numIterations && cancel == false; ++iteration)
         {
-            auto trainingSample = mnistLoader.getRandomSample();
+            auto trainingSample = mnistLoader.getSample(0);
 
-            QImage trainingImage(trainingSample.data, 28, 28, QImage::Format_Grayscale8);
-            emit sampleImageLoaded(trainingImage);
+            emit logMessage(QString("training sample ") + QString::number(trainingSample.label));
+            emit sampleImageLoaded(trainingSample.toQImage());
 
             std::vector<double> targetValues =
             {
