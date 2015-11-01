@@ -8,6 +8,21 @@ void MnistLoader::load(const std::string &databaseFileName, const std::string &l
     loadLabels(labelsFileName);
 }
 
+size_t MnistLoader::getSamleCount() const
+{
+    return samples.size();
+}
+
+const MnistLoader::MnistSample &MnistLoader::getSample(size_t index) const
+{
+    if (index >= samples.size())
+    {
+        throw std::runtime_error("MNIST sample index out of range");
+    }
+
+    return *(samples[index].get());
+}
+
 const MnistLoader::MnistSample &MnistLoader::getRandomSample() const
 {
     size_t sampleIndex = (std::rand() * (samples.size() - 1)) / RAND_MAX;

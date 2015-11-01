@@ -31,6 +31,8 @@ private:
 public:
     void load(const std::string &databaseFileName, const std::string &labelsFileName);
 
+    size_t getSamleCount() const;
+    const MnistSample &getSample(size_t index) const;
     const MnistSample &getRandomSample() const;
 
 private:
