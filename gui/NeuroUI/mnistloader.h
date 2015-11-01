@@ -6,6 +6,8 @@
 #include <memory>
 #include <inttypes.h>
 
+#include <QImage>
+
 class MnistLoader
 {
 private:
@@ -21,6 +23,11 @@ public:
     public:
         uint8_t label;
         uint8_t data[SAMPLE_WIDTH * SAMPLE_HEIGHT];
+
+        QImage toQImage() const
+        {
+            return QImage(data, SAMPLE_WIDTH, SAMPLE_HEIGHT, QImage::Format_Grayscale8);
+        }
     };
 
     using MnistSample = Sample<SampleWidth, SampleHeight>;
