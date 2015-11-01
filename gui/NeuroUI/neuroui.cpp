@@ -12,6 +12,12 @@ NeuroUI::NeuroUI(QWidget *parent) :
 
 NeuroUI::~NeuroUI()
 {
+    if (m_netLearner != nullptr)
+    {
+        m_netLearner->cancelLearning();
+        m_netLearner->wait();
+    }
+
     delete ui;
 }
 

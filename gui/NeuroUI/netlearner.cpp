@@ -24,7 +24,7 @@ void NetLearner::run()
         timer.start();
 
         size_t numIterations = 100000;
-        for (size_t iteration = 0; iteration < numIterations; ++iteration)
+        for (size_t iteration = 0; iteration < numIterations && cancel == false; ++iteration)
         {
             auto trainingSample = mnistLoader.getRandomSample();
 
@@ -76,4 +76,11 @@ void NetLearner::run()
         logString.append(ex.what());
         emit logMessage(logString);
     }
+
+    cancel = false;
+}
+
+void NetLearner::cancelLearning()
+{
+    cancel = true;
 }
