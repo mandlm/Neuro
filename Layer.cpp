@@ -41,7 +41,7 @@ double Layer::getWeightedSum(size_t outputNeuron) const
 		sum += neuron.getWeightedOutputValue(outputNeuron);
 	}
 
-	return sum;
+    return sum / size();
 }
 
 void Layer::connectTo(const Layer & nextLayer)
