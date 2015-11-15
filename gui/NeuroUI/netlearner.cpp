@@ -26,9 +26,9 @@ void NetLearner::run()
         size_t numIterations = 100000;
         for (size_t iteration = 0; iteration < numIterations && cancel == false; ++iteration)
         {
-            auto trainingSample = mnistLoader.getSample(0);
+            auto trainingSample = mnistLoader.getRandomSample();
 
-            emit logMessage(QString("training sample ") + QString::number(trainingSample.label));
+//            emit logMessage(QString("training sample ") + QString::number(trainingSample.label));
             emit sampleImageLoaded(trainingSample.toQImage());
 
             std::vector<double> targetValues =
@@ -49,12 +49,7 @@ void NetLearner::run()
 
             double error = outputValues[0] - targetValues[0];
 
-            QString logString;
-
-            logString.append("Error: ");
-            logString.append(QString::number(std::abs(error)));
-
-            emit logMessage(logString);
+            emit logMessage(QString("Error: ") + QString::number(std::abs(error)));
             emit currentNetError(error);
             emit progress((double)iteration / (double)numIterations);
 
