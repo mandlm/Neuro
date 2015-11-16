@@ -17,6 +17,7 @@ class NeuroUI : public QMainWindow
 
 private:
     std::unique_ptr<NetLearner> m_netLearner;
+    size_t m_logSize = 128;
 
 public:
     explicit NeuroUI(QWidget *parent = 0);

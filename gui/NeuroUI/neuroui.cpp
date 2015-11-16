@@ -46,6 +46,11 @@ void NeuroUI::on_runButton_clicked()
 
 void NeuroUI::logMessage(const QString &logMessage)
 {
+    if (ui->logView->count() == static_cast<int>(m_logSize))
+    {
+        delete ui->logView->item(0);
+    }
+
     ui->logView->addItem(logMessage);
     ui->logView->scrollToBottom();
 }
