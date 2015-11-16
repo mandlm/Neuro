@@ -11,6 +11,8 @@ private:
     std::list<double> m_errorValues;
     double m_maxErrorValue;
 
+    size_t m_bufferSize = 10000;
+
 public:
     explicit ErrorPlotter(QWidget *parent = 0);
 

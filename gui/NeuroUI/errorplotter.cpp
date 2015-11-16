@@ -28,6 +28,11 @@ void ErrorPlotter::clear()
 
 void ErrorPlotter::addErrorValue(double errorValue)
 {
+    if (m_errorValues.size() == m_bufferSize)
+    {
+        m_errorValues.pop_front();
+    }
+
     m_errorValues.push_back(errorValue);
     m_maxErrorValue = std::max<double>(m_maxErrorValue, errorValue);
 
